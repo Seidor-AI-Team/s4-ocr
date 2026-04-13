@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ── Design tokens — alineados con hackathon-app ─────────── */
+:root {
+  /* Superficies */
+  --bg:           #0B0D14;
+  --bg-elevated:  #13161F;
+  --bg-card:      #1C1F2B;
+  --border:       #272B3A;
+  --border-hi:    #3A3F54;
+
+  /* Gold accent */
+  --accent:       #E8B960;
+  --accent-dim:   rgba(232,185,96,0.08);
+  --accent-glow:  rgba(232,185,96,0.15);
+
+  /* Estados */
+  --green:        #2EAD63;
+  --green-dim:    rgba(46,173,99,0.12);
+  --yellow:       #F59E0B;
+  --yellow-dim:   rgba(245,158,11,0.12);
+  --red:          #F06565;
+  --red-dim:      rgba(240,101,101,0.12);
+
+  /* Texto */
+  --text:         #ECEDF2;
+  --text-sub:     #8A8C98;
+  --text-muted:   #525460;
+
+  /* Tipografía — igual que hackathon-app */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* Overlay de carga */
+  --overlay:      rgba(11,13,20,0.91);
+}
+
+/* ── Light theme — Grupo Macro style ────────────────────── */
+:root[data-theme="light"] {
+  --bg:           #F0F2F8;
+  --bg-elevated:  #FFFFFF;
+  --bg-card:      #FFFFFF;
+  --border:       #D8DCE8;
+  --border-hi:    #B8C2D4;
+
+  --accent:       #C48A1A;
+  --accent-dim:   rgba(196,138,26,0.08);
+  --accent-glow:  rgba(196,138,26,0.15);
+
+  --green:        #1E7D45;
+  --green-dim:    rgba(30,125,69,0.10);
+  --yellow:       #B86F00;
+  --yellow-dim:   rgba(184,111,0,0.10);
+  --red:          #C43A3A;
+  --red-dim:      rgba(196,58,58,0.10);
+
+  --text:         #0C0E18;
+  --text-sub:     #434659;
+  --text-muted:   #8A8EA8;
+
+  --overlay:      rgba(240,242,248,0.93);
+}
+
+/* ── Base ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 3px; }
+
+/* ── Keyframes ───────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scanLine {
+  0%   { top: -3px; opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes barGrow {
+  from { width: 0; }
+}
+
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50%       { box-shadow: 0 0 0 6px rgba(212,168,67,0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* ── Utility classes ─────────────────────────────────────── */
+.anim-fade-up   { animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+.anim-spin      { animation: spin 0.85s linear infinite; }
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(26,41,66,0.55) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,41,66,0.55) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+:root[data-theme="light"] .grid-bg {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px);
+}
+
+.scan-host { position: relative; overflow: hidden; }
+
+.scan-line {
+  position: absolute;
+  left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent) 40%, var(--accent) 60%, transparent);
+  box-shadow: 0 0 10px var(--accent-glow), 0 0 28px var(--accent-glow);
+  animation: scanLine 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
